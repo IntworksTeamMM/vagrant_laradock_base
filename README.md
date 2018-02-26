@@ -14,6 +14,7 @@ Add git setting to Vagrantfile
   vi Vagrantfile
 </pre>
 
+Please change "hogehoge" and "hogehoge@sakura.co.jp" to your Git account.
 <pre>
   config.vm.provision :shell do |git|
     git.env = {:GIT_USER => "hogehoge", :GIT_EMAIL => "hogehoge@sakura.co.jp"}
