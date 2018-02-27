@@ -8,11 +8,12 @@ Vagrant.configure("2") do |config|
   # 必要ならポートを追加する
   config.vm.network "forwarded_port", guest: 22, host: 10022, id: "ssh"
   config.vm.network "forwarded_port", guest: 80, host: 10080, id: "web"
-  config.vm.network "forwarded_port", guest: 8080, host: 18080
-
-  # db用
+  config.vm.network "forwarded_port", guest: 443, host: 10443
+  #config.vm.network "forwarded_port", guest: 8080, host: 18080
+  
+  ### db用
+  #mysql
   config.vm.network "forwarded_port", guest: 3306, host: 13306
-  config.vm.network "forwarded_port", guest: 1521, host: 11521
 
   #初期設定
   config.vm.provision "shell", path: './provision_root.sh'
@@ -20,6 +21,9 @@ Vagrant.configure("2") do |config|
   
   # swapの設定はメモリが足りない場合などにやる
   #config.vm.provision "shell", path: './provision_root_swap.sh'
+
+  #laradockのインストールと設定
+  config.vm.provision "shell", path: './provision_root_laradock.sh'
 
   #ローカルとファイル同期
   config.vm.synced_folder "./workspace", "/workspace" ,create: true
@@ -32,4 +36,7 @@ Vagrant.configure("2") do |config|
     git.env = {:GIT_USER => "hogehoge", :GIT_EMAIL => "hogehoge@sakura.co.jp"}
     git.path = './provision_root_git.sh'
   end
+
+  #laradockのプロセス起動
+  config.vm.provision "shell",run: "always" ,path: './docker-run.sh'  
 end

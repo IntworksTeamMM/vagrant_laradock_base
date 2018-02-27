@@ -22,7 +22,19 @@ Please change "hogehoge" and "hogehoge@sakura.co.jp" to your Git account.
   end
 </pre>
 
-<pre>
-  vagrant up  
-</pre>
+<code>
+vagrant up  
+</code>
+
+my project install
+<code>
+  vagrant ssh
+
   
+  cd /workspace/laradock
+  docker-compose exec workspace bash
+
+
+  git clone {my project}
+
+</code>
