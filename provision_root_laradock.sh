@@ -1,16 +1,24 @@
 #!/bin/sh
 
-# size of swapfile
+# install my project
 cd /workspace
-git clone https://github.com/Laradock/laradock.git laradock
 
-cd laradock
-cp env-example .env
+if [-n ${MY_GIT_PROJECT_URL}]; then
+ git clone ${MY_GIT_PROJECT_URL} ${PROJECT_NAME}
+fi
 
-sed -i "s/\(^MYSQL_DATABASE=\).*/\MYSQL_DATABASE=homestead/" .env
-sed -i "s/\(^MYSQL_USER=\).*/\MYSQL_USER=homestead/" .env
-sed -i "s/\(^MYSQL_PASSWORD=\).*/\MYSQL_PASSWORD=homestead/" .env
+# install laradock
+git clone https://github.com/Laradock/laradock.git
 
 
-cp nginx/sites/laravel.conf.example nginx/sites/laravel.conf
+# settings
+cp ./laradock/env-example ./laradock/.env
+cp ./laradock/nginx/sites/laravel.conf.example ./laradock/nginx/sites/laravel.conf
 
+sed -i "s/\(^MYSQL_DATABASE=\).*/\MYSQL_DATABASE=homestead/" ./laradock/.env
+sed -i "s/\(^MYSQL_USER=\).*/\MYSQL_USER=homestead/" ./laradock/.env
+sed -i "s/\(^MYSQL_PASSWORD=\).*/\MYSQL_PASSWORD=homestead/" ./laradock/.env
+if [-n ${PROJECT_NAME}]; then
+    sed -i "s/\(^APPLICATION=\).*/\APPLICATION=..\/"${PROJECT_NAME}"\//" ./laradock/.env
+    sed -i "s:/var/www/laravel/public:/var/www/"${PROJECT_NAME}"/public:" ./laradock/nginx/sites/laravel.conf
+fi
