@@ -1,5 +1,7 @@
 
-VM for moving Laradoc
+It is vm for Laradock.
+The host OS is centos 7.
+Automatically partially initialize laradock.
 
 ### Install
 
@@ -14,14 +16,27 @@ Add git setting to Vagrantfile
   vi Vagrantfile
 </pre>
 
-Please change "hogehoge" and "hogehoge@sakura.co.jp" to your Git account.
+Please change your Git account.
 <pre>
-  config.vm.provision :shell do |git|
-    git.env = {:GIT_USER => "hogehoge", :GIT_EMAIL => "hogehoge@sakura.co.jp"}
-    git.path = './provision_root_git.sh'
-  end
+  # settings
+  GIT_USER = "hogehoge"
+  GIT_EMAIL = "hogehoge"
 </pre>
 
+Please change your Laravel-Project.  
+<pre>
+  MY_GIT_PROJECT_URL = "hogehoge"
+  PROJECT_NAME = "hogehoge"
+</pre>
+
+Ifthere is notLaravel-Project,we will set a blank.  
+<pre>
+  MY_GIT_PROJECT_URL = ""
+  PROJECT_NAME = ""
+</pre>
+
+
+When setting is completed, start vagrant.
 <code>
 vagrant up  
 </code>
